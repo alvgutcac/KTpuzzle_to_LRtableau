@@ -42,12 +42,12 @@ def _NE_to_S_path(puzzle, coord):
         sage: _NE_to_S_path(puzzle, 3)
         Traceback (most recent call last):
         ...
-        AssertionError: The coordinate needs to be a coordinate of a 1 on the north east boundary
+        AssertionError: the coordinate needs to be a coordinate of a 1 on the north east boundary
         
         sage: _NE_to_S_path(puzzle, 4)
         [1, 1]
     """
-    assert puzzle._ne_labels[coord-1] == '1', "The coordinate needs to be a coordinate of a 1 on the north east boundary"
+    assert puzzle._ne_labels[coord-1] == '1', "the coordinate needs to be a coordinate of a 1 on the north east boundary"
     i = coord; j = puzzle._n
     
     k = 0
@@ -75,6 +75,7 @@ def _NE_to_S_path(puzzle, coord):
             if current_labels == ('1', '1', '1'):
                 moving = "west"
             j = j-1
+        assert j > 0, "something went wrong and the path escaped the puzzle"        
     return LR_list
     
 def KTpuzzle_to_LRtableau(puzzle):
