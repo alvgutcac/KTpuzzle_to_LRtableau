@@ -80,10 +80,10 @@ def _NE_to_S_path(puzzle, coord):
     
 def KTpuzzle_to_LRtableau(puzzle):
     """
-    Creates the skew Littlewood-Richardson tableau from the puzzle ``self``.
+    Creates a skew Littlewood--Richardson tableau from a puzzle.
     
     We follow the bijection given in [Purbhoo07]_. A similar but different
-    algorithm is given in [Vakil03]_.
+    bijection is given in [Vakil03]_.
     
     INPUT:
     
@@ -187,5 +187,5 @@ def abacus_to_partition(abacus):
             k=k+1
             part.insert(0, i+1-k)
         elif abacus[i] != '0' and abacus[i] != 0:
-            raise ValueError('An abacus should be a tuple, list or string of 0s and 1s')
+            raise ValueError('an abacus should be a tuple, list or string of 0s and 1s')
     return Partition(part)
