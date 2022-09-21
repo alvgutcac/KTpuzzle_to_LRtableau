@@ -11,7 +11,7 @@ from sage.combinat.knutson_tao_puzzles import PuzzleFilling, H_grassmannian_piec
     # return self._squares == other._squares
 
 def _NE_to_S_path(puzzle, coord):
-    """
+    r"""
     Returns the content row of the LR skew tableau corresponding to ``coord``.
         
     This method traces out a path from ``coord`` to its "mirror" coordinate.
@@ -33,7 +33,7 @@ def _NE_to_S_path(puzzle, coord):
     - ``coord`` -- north-east boundary position counting from the top whose label is 1
         
     OUTPUT:
-    
+        
     - a list of numbers giving the content of one row in the LR tableau
         
     TESTS::
@@ -41,18 +41,20 @@ def _NE_to_S_path(puzzle, coord):
         sage: ps = KnutsonTaoPuzzleSolver("H")
         sage: solns = ps('0101011','0101101')
         sage: puzzle = solns[4]
+        sage: puzzle[(1,1)]
+        0/1\10
         sage: _NE_to_S_path(puzzle, 2)
         [2]
         sage: _NE_to_S_path(puzzle, 3)
         Traceback (most recent call last):
         ...
-        AssertionError: the coordinate needs to be a coordinate of a 1 on the north east boundary
+        AssertionError: the coordinate needs to be a coordinate of a 1 on the north-east boundary
         
         sage: _NE_to_S_path(puzzle, 4)
         [1, 1]
         
     """
-    assert puzzle._ne_labels[coord-1] == '1', "the coordinate needs to be a coordinate of a 1 on the north east boundary"
+    assert puzzle._ne_labels[coord-1] == '1', "the coordinate needs to be a coordinate of a 1 on the north-east boundary"
     i = coord; j = puzzle._n
     
     k = 0
@@ -84,19 +86,11 @@ def _NE_to_S_path(puzzle, coord):
     return LR_list
     
 def KTpuzzle_to_LRtableau(puzzle):
-    """
+    r"""
     Creates a skew Littlewood--Richardson tableau from a puzzle.
     
     We follow the bijection given in [Purbhoo07]_. A similar but different
     bijection is given in [Vakil03]_.
-    
-    INPUT:
-    
-    - ``puzzle`` -- a PuzzleFilling
-    
-    OUTPUT:
-    
-    - a LR skew tableau
     
     .. WARNING::
         
@@ -107,6 +101,14 @@ def KTpuzzle_to_LRtableau(puzzle):
     .. [Purbhoo07] K. Purbhoo, Puzzles, Tableaux and Mosaics, :arxiv:`0705.1184`
         
     .. [Vakil03] R. Vakil, A geometric Littlewood-Richardson rule, :arxiv:`0302294`
+        
+    INPUT:
+    
+    - ``puzzle`` -- a PuzzleFilling
+    
+    OUTPUT:
+    
+    - a LR skew tableau
     
     EXAMPLES::
         
@@ -117,9 +119,6 @@ def KTpuzzle_to_LRtableau(puzzle):
          [[None, None, 1], [None, 1], [2]],
          [[None, None, 1], [None, 2], [1]],
          [[None, 1, 1], [None, 2], [None]]]
-
-    TESTS::
-    
         sage: # Example from Purbhoo07 (runs slowly)
         ....: ps = KnutsonTaoPuzzleSolver('H')
         ....: solns = ps('00000010001000010100', '00000000100010010100')
@@ -148,7 +147,7 @@ def KTpuzzle_to_LRtableau(puzzle):
     
 
 def LRtableau_to_KTpuzzle(tableau, size=None):
-    """
+    r"""
     Takes a Knutson--Tao puzzle and returns a skew LR tableau.
     
     This is the inverse of :func:`.KTpuzzle_to_LRtableau`.
@@ -159,15 +158,8 @@ def LRtableau_to_KTpuzzle(tableau, size=None):
     
     - ``size`` -- the size of the output Knutson--Tao puzzle (optional)
     
-    EXAMPLES::
+    TESTS::
     
-        sage: ps = KnutsonTaoPuzzleSolver("H")
-        sage: puzzle = ps('01010','01001')[0]
-        sage: tab = KTpuzzle_to_LRtableau(puzzle); tab
-        [[None, 1, 1], [2]]
-        sage: puzzle2 = LRtableau_to_KTpuzzle(tab)
-        sage: puzzle._squares == puzzle2._squares # To change for puzzle == puzzle2 after implementing eq
-        True
         sage: # Example from Purbhoo07
         sage: tab = SkewTableau([
         ....: [None]*10 + [1]*4,
@@ -180,7 +172,16 @@ def LRtableau_to_KTpuzzle(tableau, size=None):
         sage: ''.join(puzzle.south_labels())
         '01000010001001000000'
         sage: # puzzle.plot() # not tested
-
+    
+    EXAMPLES::
+    
+        sage: ps = KnutsonTaoPuzzleSolver("H")
+        sage: puzzle = ps('01010','01001')[0]
+        sage: tab = KTpuzzle_to_LRtableau(puzzle); tab
+        [[None, 1, 1], [2]]
+        sage: puzzle2 = LRtableau_to_KTpuzzle(tab)
+        sage: puzzle._squares == puzzle2._squares # To change for puzzle == puzzle2 after implementing eq
+        True
     """
     # Extract border of puzzle from tableau
     
@@ -298,7 +299,7 @@ def LRtableau_to_KTpuzzle(tableau, size=None):
 ##############################################################################
     
 def abacus_to_partition(abacus):
-    """
+    r"""
     Returns a partition from an abacus.
     
     An abacus is a function `w : \mathbb{Z} \to \{0,1\}` such that
@@ -374,6 +375,12 @@ def partition_to_abacus(lam, size = 0):
         '110000'
         sage: partition_to_abacus([0,0])
         '11'
+        sage: partition_to_abacus([2,2], 4)
+        '0011'
+        sage: partition_to_abacus([2,2], 5)
+        '00110'
+        sage: partition_to_abacus([2,2,0], 5)
+        '10011'
   
     """
     L = len(lam)
